@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Jason Hoffmann: baseball analytics portfolio. Four live sites, validated model cards and research.">
+<title>Jason Hoffmann Baseball Analytics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a scouting-binder page. Masthead, then the four sites as a tab strip, then model cards as a two-column ledger, then research notes. */
+:root {
+  --bg: #f3f5f2;
+  --surface: #ffffff;
+  --ink: #17221d;
+  --muted: #56645c;
+  --line: #d5ddd7;
+  --accent: #1f5e45;
+  --accent-soft: #e2eee7;
+  --seam: #b4332a;
+  --display: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1613; --surface: #16201b; --ink: #e5ece7; --muted: #9aaba1; --line: #2a3832;
+    --accent: #6cc39a; --accent-soft: #1d3329; --seam: #ef7a6f; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0f1613; --surface: #16201b; --ink: #e5ece7; --muted: #9aaba1; --line: #2a3832;
+  --accent: #6cc39a; --accent-soft: #1d3329; --seam: #ef7a6f; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 56px;
+}
+.wrap { max-width: 1080px; margin: 0 auto; display: grid; gap: 44px; }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
+h1, h2, h3 { font-family: var(--display); font-weight: 700; letter-spacing: .01em; text-wrap: balance; margin: 0; line-height: 1.05; }
+h1 { font-size: clamp(2.4rem, 6vw, 3.6rem); }
+h2 { font-size: 1.9rem; }
+h3 { font-size: 1.35rem; }
+.eyebrow { font-family: var(--mono); font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.mast { padding-top: 40px; border-bottom: 2px solid var(--ink); padding-bottom: 24px; display: grid; gap: 14px; }
+.mast p { margin: 0; max-width: 68ch; color: var(--muted); font-size: 1.05rem; }
+.seam { display: inline-block; width: 26px; height: 3px; background: repeating-linear-gradient(90deg, var(--seam) 0 5px, transparent 5px 8px); vertical-align: middle; margin-right: 8px; }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--mono); font-size: .82rem; color: var(--ink); }
+.facts b { color: var(--accent); font-weight: 500; }
+section { display: grid; gap: 18px; }
+.sec-head { display: grid; gap: 4px; }
+.sec-head p { margin: 0; color: var(--muted); max-width: 70ch; }
+.sites { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.site { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); padding: 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.site .lvl { font-family: var(--display); font-size: 1.5rem; font-weight: 700; }
+.site p { margin: 0; font-size: .9rem; color: var(--muted); }
+.site a { font-family: var(--mono); font-size: .82rem; word-break: break-all; }
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 470px), 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); padding: 18px 18px 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.card header { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.tag { font-family: var(--mono); font-size: .72rem; padding: 2px 8px; border: 1px solid var(--line); color: var(--muted); white-space: nowrap; }
+.card p { margin: 0; }
+dl { margin: 0; display: grid; grid-template-columns: 96px 1fr; gap: 6px 12px; font-size: .9rem; }
+dt { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+dd { margin: 0; min-width: 0; }
+.val { background: var(--accent-soft); padding: 10px 12px; display: grid; gap: 4px; font-size: .88rem; }
+.val .num { font-family: var(--mono); font-variant-numeric: tabular-nums; font-weight: 500; color: var(--accent); }
+.tbl { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: .88rem; font-variant-numeric: tabular-nums; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+td.n { font-family: var(--mono); text-align: right; white-space: nowrap; }
+.research { display: grid; gap: 12px; }
+.note { background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--seam); padding: 14px 16px; display: grid; gap: 6px; }
+.note p { margin: 0; font-size: .92rem; }
+footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 16px; }
+@media (max-width: 520px) { dl { grid-template-columns: 1fr; gap: 2px; } dd { margin-bottom: 6px; } }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="mast">
+    <div class="eyebrow"><span class="seam"></span>Baseball analytics portfolio</div>
+    <h1>Jason Hoffmann</h1>
+    <p>I build pitch-level models and the websites that put them in front of coaches. I took one season of D1 TrackMan data and grew it into four public sites covering D1, Single-A, Triple-A and MLB. Every grade on them is validated out of sample before it ships.</p>
+    <div class="facts">
+      <span><b>8.8M</b> pitches modeled</span>
+      <span><b>4</b> live sites</span>
+      <span><b>3</b> college seasons (2023, 2025, 2026)</span>
+      <span>R · Python · SQL · XGBoost · Shiny</span>
+    </div>
+  </header>
+
+  <section aria-labelledby="sites-h">
+    <div class="sec-head">
+      <h2 id="sites-h">The sites</h2>
+      <p>The same pipeline and models run at every level. College data comes from TrackMan. The pro sites convert public Statcast data into the same TrackMan format, so each model can be retrained level by level.</p>
+    </div>
+    <div class="sites">
+      <article class="site">
+        <div class="eyebrow">Division I</div>
+        <div class="lvl">D1 Dashboard</div>
+        <p>Player pages, Stuff+ / Pitching+, arsenal grades, swing decisions, projections, power ratings, pitch design reports and a draft &amp; portal tool. It updates daily during the season.</p>
+        <a href="https://d1dashboard.duckdns.org" target="_blank" rel="noopener">d1dashboard.duckdns.org</a>
+      </article>
+      <article class="site">
+        <div class="eyebrow">Major League</div>
+        <div class="lvl">MLB</div>
+        <p>2026 Statcast data run through the college pipeline, with models retrained on MLB pitches only.</p>
+        <a href="https://dcpro-mlb.politewave-07a5c839.westus.azurecontainerapps.io" target="_blank" rel="noopener">Open the MLB site</a>
+      </article>
+      <article class="site">
+        <div class="eyebrow">Triple-A</div>
+        <div class="lvl">AAA</div>
+        <p>Minor league Statcast for every Triple-A park, graded on its own level's scale.</p>
+        <a href="https://dcpro-aaa.politewave-07a5c839.westus.azurecontainerapps.io" target="_blank" rel="noopener">Open the Triple-A site</a>
+      </article>
+      <article class="site">
+        <div class="eyebrow">Single-A</div>
+        <div class="lvl">Single-A (FSL)</div>
+        <p>Florida State League tracking data, the first pro level for most college draftees.</p>
+        <a href="https://dcpro-a.politewave-07a5c839.westus.azurecontainerapps.io" target="_blank" rel="noopener">Open the Single-A site</a>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="models-h">
+    <div class="sec-head">
+      <h2 id="models-h">Model cards</h2>
+      <p>One card per model: what it predicts, how it's built, how well it holds up on data it never saw, and its known limits. College figures use 2023, 2025 and 2026 D1 data unless a card says otherwise.</p>
+    </div>
+    <div class="cards">
+
+      <article class="card" id="stuff">
+        <header><h3>Stuff+</h3><span class="tag">pitch quality</span></header>
+        <p>Grades a pitch by its physical traits alone: how many runs a pitch with that shape tends to save.</p>
+        <dl>
+          <dt>Target</dt><dd>RE24 run value of the pitch (count-based)</dd>
+          <dt>Inputs</dt><dd>Velo, spin, induced vertical and horizontal break (lefties mirrored), release height and side, extension, and differences from the pitcher's primary fastball</dd>
+          <dt>Method</dt><dd>XGBoost per pitcher hand. Each pitch is scored by models that never saw that pitcher (5-fold cross-fit by pitcher). 100 = average pitch of that type, 10 = one SD.</dd>
+        </dl>
+        <div class="val">
+          <span><span class="num">0.96</span> odd/even reliability, D1 (1,330 pitchers)</span>
+          <span><span class="num">0.19</span> correlation with second-half run prevention, D1. MLB: <span class="num">0.28</span></span>
+        </div>
+        <dl><dt>Limits</dt><dd>It can't see deception or command. College TrackMan units differ by park, so a calibration step is in progress.</dd></dl>
+      </article>
+
+      <article class="card" id="location">
+        <header><h3>Location+</h3><span class="tag">command</span></header>
+        <p>Grades where a pitch went, given the count and pitch type, separate from its stuff.</p>
+        <dl>
+          <dt>Target</dt><dd>Same RE24 run value as Stuff+</dd>
+          <dt>Inputs</dt><dd>Plate location, count, batter side and pitch type</dd>
+          <dt>Method</dt><dd>XGBoost, cross-fit by pitcher, on the same 100 / 10 scale</dd>
+        </dl>
+        <div class="val">
+          <span><span class="num">0.84</span> odd/even reliability, D1</span>
+          <span><span class="num">0.14</span> correlation with second-half run prevention, D1</span>
+        </div>
+        <dl><dt>Limits</dt><dd>It grades the result of the target, not the intended target, so a missed spot that works still grades well.</dd></dl>
+      </article>
+
+      <article class="card" id="pitching">
+        <header><h3>Pitching+</h3><span class="tag">stuff × location</span></header>
+        <p>One grade that learns how shape and location interact, like a sweeper off the plate vs. the same sweeper middle-middle.</p>
+        <dl>
+          <dt>Target</dt><dd>RE24 run value, compared with the same pitch type in the same count</dd>
+          <dt>Inputs</dt><dd>All Stuff+ inputs plus plate location, approach angles, count and platoon</dd>
+          <dt>Method</dt><dd>XGBoost per pitch type, cross-fit by pitcher. Balls in play count at the league-average in-play value, so defense and luck are removed.</dd>
+        </dl>
+        <div class="val">
+          <span><span class="num">0.25</span> correlation with second-half run prevention, D1. That's the best single grade, ahead of actual run prevention (<span class="num">0.22</span>) and the best Stuff+/Location+ blend (<span class="num">0.21</span>).</span>
+          <span><span class="num">0.74</span> odd/even reliability</span>
+        </div>
+        <dl><dt>Limits</dt><dd>It needs more pitches than Stuff+ to settle, and on the MLB data Stuff+ alone predicts better (0.28 vs 0.16).</dd></dl>
+      </article>
+
+      <article class="card" id="arsenal-grades">
+        <header><h3>Arsenal Grades</h3><span class="tag">20–80 scale</span></header>
+        <p>Turns the pitch models into scouting-scale grades for each pitch and for the whole arsenal, with plain-English flags like "underused weapon."</p>
+        <dl>
+          <dt>Inputs</dt><dd>Pitching+ 30%, results 25%, Stuff+ 20%, Whiff+ 15%, location 10%, all compared with the same pitch type, hand and batter side</dd>
+          <dt>Method</dt><dd>Percentile within the season mapped to 20–80. The arsenal grade is usage-weighted and shrunk toward average by 150 pitches.</dd>
+        </dl>
+        <div class="val">
+          <span><span class="num">0.36</span> correlation of a 2025 arsenal grade with 2026 run value per 100 (896 pitchers), vs 0.30 for Pitching+, 0.28 for Stuff+ and 0.22 for 2025 run value itself</span>
+          <span><span class="num">0.31</span> on 2023 → 2025</span>
+        </div>
+        <dl><dt>Limits</dt><dd>The weights were set by hand and checked afterward. They aren't fitted.</dd></dl>
+      </article>
+
+      <article class="card" id="decision">
+        <header><h3>Decision+</h3><span class="tag">hitter swing decisions</span></header>
+        <p>The hitter-side twin of Stuff+: was swinging (or taking) the right call on this pitch, compared with an average hitter?</p>
+        <dl>
+          <dt>Method</dt><dd>Three XGBoost models give each pitch an expected run value if swung at (with contact valued by exit velo and launch angle), an expected value if taken, and an average swing probability. Decision runs = (swing − p_swing) × (xRV_swing − xRV_take).</dd>
+          <dt>Scale</dt><dd>100 = average hitter, 10 = one SD, with a minimum of 150 pitches</dd>
+        </dl>
+        <div class="val">
+          <span>The swing-value model's error is <span class="num">4.6%</span> below a flat-average baseline. Rankings were stable across model versions (r = <span class="num">0.996</span>).</span>
+        </div>
+        <dl><dt>Limits</dt><dd>A year-to-year stability check is the next validation step.</dd></dl>
+      </article>
+
+      <article class="card" id="projections-v2">
+        <header><h3>Projections v2</h3><span class="tag">next-season xwOBA</span></header>
+        <p>Next-season expected wOBA for every D1 hitter and pitcher, schedule-adjusted, with "why" lines from the model weights.</p>
+        <dl>
+          <dt>Method</dt><dd>Ridge regression. Players regress toward their conference average, not D1's. Inputs with the wrong sign are dropped and the model refit, so the explanations stay honest.</dd>
+          <dt>Inputs</dt><dd>Pitchers: Stuff+, Pitching+, K%, CSW%, arsenal shape and more. Hitters: EV, xwOBA, barrel%, chase% and contact% and more.</dd>
+        </dl>
+        <div class="tbl"><table>
+          <thead><tr><th>Test</th><th>Pitchers</th><th>Hitters</th></tr></thead>
+          <tbody>
+            <tr><td>5-fold CV, 2025 → 26</td><td class="n">0.32</td><td class="n">0.49</td></tr>
+            <tr><td>Held out, 2023 → 25</td><td class="n">0.24</td><td class="n">0.35</td></tr>
+            <tr><td>Forward, fit on the past only</td><td class="n">0.32</td><td class="n">0.46</td></tr>
+            <tr><td>Baseline: last year's xwOBA</td><td class="n">0.22</td><td class="n">0.38</td></tr>
+          </tbody>
+        </table></div>
+        <dl><dt>Limits</dt><dd>College samples are small. Adding the 2024 season is the biggest remaining gain.</dd></dl>
+      </article>
+
+      <article class="card" id="power-rating">
+        <header><h3>Power Rating</h3><span class="tag">team strength</span></header>
+        <p>How many runs better than an average D1 team a club is on a neutral field, and the win chance for any matchup.</p>
+        <dl>
+          <dt>Method</dt><dd>Opponent- and home-adjusted run margin (games capped at ±8) plus adjusted run prevention. Power = 0.85 × Results + 0.25 × Adj Def. Win chance = Φ(margin / 5.3).</dd>
+        </dl>
+        <div class="val">
+          <span><span class="num">62.7%</span> of winners picked on about 57,000 game rows (2023–25, fit before each cutoff)</span>
+          <span>Margin calibration slope <span class="num">1.12</span>. Win-probability buckets land within <span class="num">2–4</span> points of actual.</span>
+        </div>
+        <dl><dt>Limits</dt><dd>TrackMan expected-run parts added nothing once official results were in, so it's results-based.</dd></dl>
+      </article>
+
+      <article class="card" id="park-factors">
+        <header><h3>Park Factors</h3><span class="tag">run environment</span></header>
+        <p>wOBA and run factors for every D1 stadium, used for park-adjusted lines on player pages.</p>
+        <dl>
+          <dt>Method</dt><dd>wOBA per PA at a park vs. the same teams' games elsewhere, pooled over all seasons and pulled toward 1.00 by 8,000 PA. Shared and neutral sites stay at 1.00.</dd>
+        </dl>
+        <div class="val">
+          <span>One season of a park is mostly noise (year-to-year raw ratio r = <span class="num">0.17</span>), so the factors pool every season.</span>
+        </div>
+        <dl><dt>Limits</dt><dd>It measures run scoring, not measurement bias in each park's TrackMan unit. That's the calibration study in progress.</dd></dl>
+      </article>
+
+    </div>
+  </section>
+
+  <section aria-labelledby="research-h">
+    <div class="sec-head">
+      <h2 id="research-h">Research</h2>
+      <p>Five studies on 4.2 million D1 pitches and 1.6 million 2026 pro pitches. The full write-up has every method and table.</p>
+    </div>
+    <div class="research" id="research-list">
+      <div class="note"><h3>College to pro: what carries over</h3><p>I matched 147 pitchers and 164 hitters to their 2026 pro seasons. Pitch traits carry over (release height r = 0.80, fastball IVB 0.77, velo 0.65), and so do hitter EV90 (0.70), whiff% (0.57) and chase% (0.52). College wOBA and xwOBA barely do (0.12, 0.14).</p></div>
+      <div class="note"><h3>When college stats become real</h3><p>D1 stats settle faster than MLB stats because the talent spread is wider. Hitter xwOBA is half signal at 123 PA (MLB 245), and pitcher CSW% at 219 pitches (MLB 507). Stuff+ needs only a handful of pitches.</p></div>
+      <div class="note"><h3>TrackMan unit calibration by park</h3><p>D1 parks disagree 3 times more than MLB parks on exit velo (1 SD = 1.4 mph vs 0.47) and 4 times more on extension. The biases repeat year to year (Stuff+ r = 0.67), so they can be corrected. Altitude parks show real physics.</p></div>
+      <div class="note"><h3>Times through the order in college</h3><p>On 512,700 PA, D1 starters decline steadily (+1.5 xwOBA points per batter) with no cliff at the second time through. Each 1 mph of lost fastball velo costs about 19 points, nearly matching MLB (22).</p></div>
+      <div class="note"><h3>Conference translation factors</h3><p>A hitter + pitcher + conference model puts 40 xwOBA points between the SEC and Patriot League schedules. It lowers the error when predicting transfers (hitter K% 0.061 → 0.057, pitcher xwOBA 0.054 → 0.050).</p></div>
+    </div>
+  </section>
+
+  <footer>Built with R (data.table, xgboost, Shiny) and Python (pandas, scikit-learn). Data: TrackMan (D1) and public Statcast (pro), 2023–2026.</footer>
+</div>
+</body>
+</html>
