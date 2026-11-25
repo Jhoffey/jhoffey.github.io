@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Jason Hoffmann: baseball analytics portfolio. Four live sites, validated model cards and research.">
+<meta name="description" content="Jason Hoffmann: baseball analytics portfolio. Five sites from D1 to MLB, validated model cards and research.">
 <title>Jason Hoffmann Baseball Analytics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
@@ -54,7 +54,7 @@ h3 { font-size: 1.35rem; }
 section { display: grid; gap: 18px; }
 .sec-head { display: grid; gap: 4px; }
 .sec-head p { margin: 0; color: var(--muted); max-width: 70ch; }
-.sites { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.sites { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
 .site { background: var(--surface); border: 1px solid var(--line); border-top: 4px solid var(--accent); padding: 16px; display: grid; gap: 8px; align-content: start; min-width: 0; }
 .site .lvl { font-family: var(--display); font-size: 1.5rem; font-weight: 700; }
 .site p { margin: 0; font-size: .9rem; color: var(--muted); }
@@ -88,10 +88,10 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
   <header class="mast">
     <div class="eyebrow"><span class="seam"></span>Baseball analytics portfolio</div>
     <h1>Jason Hoffmann</h1>
-    <p>I build pitch-level models and the websites that put them in front of coaches. I took one season of D1 TrackMan data and grew it into four public sites covering D1, Single-A, Triple-A and MLB. Every grade on them is validated out of sample before it ships.</p>
+    <p>I build pitch-level models and the websites that put them in front of coaches. I took one season of D1 TrackMan data and grew it into public sites covering D1, Single-A, Triple-A, the Arizona Fall League and MLB. Every grade on them is validated out of sample before it ships.</p>
     <div class="facts">
       <span><b>8.8M</b> pitches modeled</span>
-      <span><b>4</b> live sites</span>
+      <span><b>5</b> sites, D1 to MLB</span>
       <span><b>3</b> college seasons (2023, 2025, 2026)</span>
       <span>R · Python · SQL · XGBoost · Shiny</span>
     </div>
@@ -106,26 +106,32 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
       <article class="site">
         <div class="eyebrow">Division I</div>
         <div class="lvl">D1 Dashboard</div>
-        <p>Player pages, Stuff+ / Pitching+, arsenal grades, swing decisions, projections, power ratings, pitch design reports and a draft &amp; portal tool. It updates daily during the season.</p>
+        <p>Player pages, Stuff+ / Pitching+, MLB Stuff+ (how each pitch would grade in the majors), arsenal grades, swing decisions, projections, power ratings, Pitch Design reports with Whiff+ and a draft &amp; portal tool. It updates daily during the season.</p>
         <a href="https://d1dashboard.duckdns.org" target="_blank" rel="noopener">d1dashboard.duckdns.org</a>
       </article>
       <article class="site">
         <div class="eyebrow">Major League</div>
         <div class="lvl">MLB</div>
         <p>2026 Statcast data run through the college pipeline, with models retrained on MLB pitches only.</p>
-        <a href="https://dcpro-mlb.politewave-07a5c839.westus.azurecontainerapps.io" target="_blank" rel="noopener">Open the MLB site</a>
+        <a href="https://mlbdashboard.duckdns.org" target="_blank" rel="noopener">mlbdashboard.duckdns.org</a>
       </article>
       <article class="site">
         <div class="eyebrow">Triple-A</div>
         <div class="lvl">AAA</div>
         <p>Minor league Statcast for every Triple-A park, graded on its own level's scale.</p>
-        <a href="https://dcpro-aaa.politewave-07a5c839.westus.azurecontainerapps.io" target="_blank" rel="noopener">Open the Triple-A site</a>
+        <a href="https://aaadashboard.duckdns.org" target="_blank" rel="noopener">aaadashboard.duckdns.org</a>
       </article>
       <article class="site">
         <div class="eyebrow">Single-A</div>
         <div class="lvl">Single-A (FSL)</div>
         <p>Florida State League tracking data, the first pro level for most college draftees.</p>
-        <a href="https://dcpro-a.politewave-07a5c839.westus.azurecontainerapps.io" target="_blank" rel="noopener">Open the Single-A site</a>
+        <a href="https://a-fsldashboard.duckdns.org" target="_blank" rel="noopener">a-fsldashboard.duckdns.org</a>
+      </article>
+      <article class="site">
+        <div class="eyebrow">Arizona Fall League</div>
+        <div class="lvl">Fall League</div>
+        <p>Top prospects' fall games, pulled pitch by pitch from MLB game feeds. Too small a league for its own models, so it's graded on the Triple-A scale (100 = average Triple-A pitch).</p>
+        <a href="https://afldashboard.duckdns.org" target="_blank" rel="noopener">afldashboard.duckdns.org</a>
       </article>
     </div>
   </section>
@@ -182,6 +188,18 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
         <dl><dt>Limits</dt><dd>It needs more pitches than Stuff+ to settle, and on the MLB data Stuff+ alone predicts better (0.28 vs 0.16).</dd></dl>
       </article>
 
+      <article class="card" id="whiff">
+        <header><h3>Whiff+</h3><span class="tag">swing and miss</span></header>
+        <p>The chance a pitch gets a whiff, from its shape, how it plays off the fastball, where it crossed the plate and the count. It feeds Pitching+, the arsenal grades and the Pitch Design reports.</p>
+        <dl>
+          <dt>Inputs</dt><dd>Velo, IVB, HB, spin, extension and release, differences from the primary fastball, plate location, approach angles, count and platoon. Lefties are mirrored so one model learns from both hands.</dd>
+          <dt>Method</dt><dd>XGBoost on whiffs per pitch, 5-fold cross-fit by pitcher, so no pitcher is graded by a model that saw his own games. New games are scored the same way.</dd>
+        </dl>
+        <div class="val">
+          <span>Log loss <span class="num">.282</span>, <span class="num">14.6%</span> better than a flat whiff rate, with no pitcher leakage</span>
+        </div>
+        <dl><dt>Limits</dt><dd>It grades swing-and-miss only. Called strikes and contact quality come in through Pitching+.</dd></dl>
+      </article>
       <article class="card" id="arsenal-grades">
         <header><h3>Arsenal Grades</h3><span class="tag">20–80 scale</span></header>
         <p>Turns the pitch models into scouting-scale grades for each pitch and for the whole arsenal, with plain-English flags like "underused weapon."</p>
@@ -270,7 +288,7 @@ footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--lin
     </div>
   </section>
 
-  <footer>Built with R (data.table, xgboost, Shiny) and Python (pandas, scikit-learn). Data: TrackMan (D1) and public Statcast (pro), 2023–2026.</footer>
+  <footer>Built with R (data.table, xgboost, Shiny) and Python (pandas, scikit-learn). Data: TrackMan (D1) and public Statcast and MLB game feeds (pro and Fall League), 2023–2026. Code: <a href="https://github.com/Jhoffey">github.com/Jhoffey</a>.</footer>
 </div>
 </body>
 </html>
